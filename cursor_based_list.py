@@ -4,6 +4,7 @@ Description:  Cursor-based list utilizing a header node and a trailer node.
 Author:  <WRITE YOUR COMPLETE NAME AND SECTION HERE>
 """ 
 
+from os import curdir
 from node2way import Node2Way
 
 class CursorBasedList(object):
@@ -11,18 +12,18 @@ class CursorBasedList(object):
     
     def __init__(self):
         """ Creates an empty cursor-based list."""
-        self._header = Node2Way(None)
-        self._trailer = Node2Way(None)
-        self._trailer.setPrevious(self._header)
-        self._header.setNext(self._trailer)
+        self._header = None
+        self._trailer = None
         self._current = None
         self._size = 0
 
     def push(self,item):
         new_node = Node2Way(item)
 
-        if self._header.next is None:
+        if self._header is None:
             self._header=new_node
+            self._trailer=self._header
+            self._current=self._header
             return
         self._trailer.next=new_node
         new_node.previous=self._trailer
@@ -120,29 +121,35 @@ class CursorBasedList(object):
         pass
 
     def isEmpty(self):
-        return self._header
+        return self._header==None
 
     def __len__(self):
         """ Returns the number of items in the list."""
         temp=self._header
-        counter=0
         while temp is not None:
-            counter+=1
+            self._size=self._size+1
             temp=temp.next
-        return counter
+        return self._size
 
     def __str__(self):
         """Includes items from first through last."""
         # replace below
-        temp=self._header
-        while temp is not None:
-            print(temp.data," ")
-            temp=temp.next
+        string='['
+        head=self._header
+
+        while(head is not None):
+            string=string+str(head.data)+' '
+            head=head.next
+        string+=']'
+        return string
 
     def Read_File_Data(self):
         """This function is used to read data from file and insert into the the cursor based list
-        """
-        file=open("textfile.txt","a")
+        """ 
+        file=open("textfile.txt","r")
         for i in file:
-            self.push(i.readline)
+            self.push(i)
         
+
+if __name__=="__main__":
+    pass
