@@ -1,0 +1,24 @@
+#  1.  Write the name of compiler/ IDE used by you
+#  2.  Each type of Error messages should only happen once in the log
+#
+
+PA No:12345
+Name: Raheem
+Class: EE-57A, EE Dept MCS
+
+
+Error 1 :
+
+Line number: 9
+Error message: proj1_100.py:9: error: y was not declared in this scope
+Line with error(before):   if (suit[0] != suit[1]) return 0
+Line without error(after):   if (suit[0] != suit[2]) return 
+Error description: An extra character in the line
+Solution done by me: y was declared at the correct place
+
+Error 2: 
+Line number: ...
+Error message: ...
+Line with error(before):   ...
+Line without error(after):   ...
+Error description: ...
