@@ -18,6 +18,16 @@ class CursorBasedList(object):
         self._current = None
         self._size = 0
 
+    def push(self,item):
+        new_node = Node2Way(item)
+
+        if self._header.next is None:
+            self._header=new_node
+            return
+        self._trailer.next=new_node
+        new_node.previous=self._trailer
+        self._trailer=new_node
+
 
     def hasNext(self):
         """ Returns True if the current item has a next item.
@@ -73,6 +83,16 @@ class CursorBasedList(object):
         """Inserts item after the current item, or
         as the only item if the list is empty.  The new item is the
         current item."""
+        temp=self._header
+        while temp is not None:
+            if temp.data==self._current.data:
+                break
+        new_node = Node2Way(item)
+        new_node.next = self.previous.next
+        self.previous.next = new_node
+        new_node.previous = self.previous
+        if new_node.next:
+            new_node.next.previous = new_node
         
 
     def insertBefore(self, item):
@@ -85,7 +105,7 @@ class CursorBasedList(object):
         """ Returns the current item without removing it or changing the
         current position.
         Precondition:  the list is not empty"""
-        pass
+        return self._current.data
 
     def remove(self):
         """Removes and returns the current item. Making the next item
@@ -116,5 +136,13 @@ class CursorBasedList(object):
         # replace below
         temp=self._header
         while temp is not None:
-            print(str[i]," ")
+            print(temp.data," ")
             temp=temp.next
+
+    def Read_File_Data(self):
+        """This function is used to read data from file and insert into the the cursor based list
+        """
+        file=open("textfile.txt","a")
+        for i in file:
+            self.push(i.readline)
+        
