@@ -106,6 +106,12 @@ class CursorBasedList(object):
         current item."""
         item+="\n"
         new_node = Node2Way(item)
+
+        if self._header is None:
+            self._header=new_node
+            self._trailer=self._header
+            self._current=self._header
+            return
         new_node.next = self._current.next
         
         self._current.next = new_node
@@ -124,8 +130,16 @@ class CursorBasedList(object):
         """Inserts item before the current item, or
         as the only item if the list is empty.  The new item is the
         current item."""
-
+        item+="\n"
         node=Node2Way(item)
+
+        if self._current==self._header:
+            node.next=self._current
+            self._current.previous=node
+            self._header=node
+            self._current=self._header
+            return
+
         node.next=self._current
         self._current.previous.next=node
         node.previous=self._current.previous
