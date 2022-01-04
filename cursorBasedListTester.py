@@ -12,11 +12,11 @@ def testList():
     myList.Read_File_Data()
     while True:
         print("\n=============================================================================================================================")
-      #  print("Current List:",myList)
+        print("Current List:",myList),"\n\n\n"
         if myList.isEmpty():
             print("Empty list")
         else:
-            print("\t\t\t\t length:",len(myList), " \t\t\t\t Current item:", myList.getCurrent())
+            print("\t\t\t\t length:",len(myList), " \t\tCurrent item:", myList.getCurrent())
         print("\nTest Positional List Menu:")
         print("A - insertAfter")
         print("B - insertBefore")

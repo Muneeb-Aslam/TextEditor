@@ -30,6 +30,9 @@ class CursorBasedList(object):
         self._trailer=new_node
 
 
+
+
+
     def hasNext(self):
         """ Returns True if the current item has a next item.
             Precondition:  the list is not empty."""
@@ -38,12 +41,17 @@ class CursorBasedList(object):
         return self._current.getNext() != self._trailer
 
 
+
+
+
     def hasPrevious(self):
         """ Returns True if the current item has a previous item.
             Precondition:  the list is not empty."""
         if self.isEmpty():
             raise AttributeError("Empty list")
         return self._current.getPrevious() !=None
+
+
 
 
     def first(self):
@@ -55,6 +63,8 @@ class CursorBasedList(object):
             raise AttributeError("Empty list has no next item")
         self._current=self._header
 
+
+
         
     def last(self):
         """Moves the cursor to the last item
@@ -62,15 +72,20 @@ class CursorBasedList(object):
         Precondition:  the list is not empty."""
         if self.isEmpty():
             raise AttributeError("Empty list has no next item")
-        self._current=self._trailer   
+        self._current=self._trailer
+
+
 
     def next(self):
         """Precondition: hasNext returns True.
         Postcondition: The current item is has moved to the right one item"""
-        if self.hasNext:
+        if self.hasNext():
             self._current=self._current.next
         else:
             raise AttributeError("List has no next item")
+
+
+
 
     def previous(self):
         """Precondition: hasPrevious returns True.
@@ -80,27 +95,44 @@ class CursorBasedList(object):
         else:
             raise AttributeError("List has no next item")
 
+
+
+
+
     def insertAfter(self, item):
+        
         """Inserts item after the current item, or
         as the only item if the list is empty.  The new item is the
         current item."""
-        temp=self._header
-        while temp is not None:
-            if temp.data==self._current.data:
-                break
+        item+="\n"
         new_node = Node2Way(item)
-        new_node.next = self.previous.next
-        self.previous.next = new_node
-        new_node.previous = self.previous
+        new_node.next = self._current.next
+        
+        self._current.next = new_node
+
+        new_node.previous = self._current
+
         if new_node.next:
             new_node.next.previous = new_node
+        self._current=new_node
+
         
+
+
 
     def insertBefore(self, item):
         """Inserts item before the current item, or
         as the only item if the list is empty.  The new item is the
         current item."""
-        pass
+
+        node=Node2Way(item)
+        node.next=self._current
+        self._current.previous.next=node
+        node.previous=self._current.previous
+        self._current.previous=node
+        self._current=node
+
+
 
     def getCurrent(self):
         """ Returns the current item without removing it or changing the
@@ -108,40 +140,57 @@ class CursorBasedList(object):
         Precondition:  the list is not empty"""
         return self._current.data
 
+
+
     def remove(self):
         """Removes and returns the current item. Making the next item
         the current item if one exists; otherwise the tail item in the
         list is the current item.
         Precondition: the list is not empty."""
-        pass
+        str=self._trailer.data
+        self._trailer.previous.next=None
+        return str
+
+
 
     def replace(self, newItemValue):
         """Replaces the current item by the newItemValue.
         Precondition: the list is not empty."""
-        pass
+        if self.isEmpty():
+            print("list is empty")
+            return 
+        self._current.data=newItemValue
+
+
 
     def isEmpty(self):
         return self._header==None
 
+
+
     def __len__(self):
         """ Returns the number of items in the list."""
         temp=self._header
+        self._size=0
         while temp is not None:
             self._size=self._size+1
             temp=temp.next
         return self._size
 
+
+
     def __str__(self):
         """Includes items from first through last."""
         # replace below
-        string='['
         head=self._header
-
+        string="\n"
         while(head is not None):
-            string=string+str(head.data)+' '
+            string=string+str(head.data)
             head=head.next
-        string+=']'
         return string
+
+
+
 
     def Read_File_Data(self):
         """This function is used to read data from file and insert into the the cursor based list
@@ -149,6 +198,7 @@ class CursorBasedList(object):
         file=open("textfile.txt","r")
         for i in file:
             self.push(i)
+        file.close()
         
 
 if __name__=="__main__":
