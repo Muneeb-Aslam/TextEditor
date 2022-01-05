@@ -4,7 +4,7 @@ Description:  Cursor-based list utilizing a header node and a trailer node.
 Author:  <WRITE YOUR COMPLETE NAME AND SECTION HERE>
 """ 
 
-from os import curdir
+import os
 from node2way import Node2Way
 
 class CursorBasedList(object):
@@ -156,7 +156,7 @@ class CursorBasedList(object):
 
 
 
-    def remove(self):
+    def pop(self):
         """Removes and returns the current item. Making the next item
         the current item if one exists; otherwise the tail item in the
         list is the current item.
@@ -206,14 +206,34 @@ class CursorBasedList(object):
 
 
 
-    def Read_File_Data(self):
-        """This function is used to read data from file and insert into the the cursor based list
-        """ 
-        file=open("textfile.txt","r")
-        for i in file:
-            self.push(i)
-        file.close()
+    def Read_File_Data(self,filename):
+        """This function is used to read data from file and insert into the the cursor based list. """ 
+        with open(filename,"r") as file:
+            for i in file:
+                self.push(i)
+
+    def Write_Data(self,filename):
+        """This Function creates the new text file and write content in it. """
+        with open(filename,"w") as file:
+            temp=self._header
+            while temp is not None:
+                file.write(temp.data)
+                temp=temp.next
+    
+    def remove(self):
+        """This Function will remove the current line"""
+        if self._current.next is None:
+            print("Enter the new line  ")
+            str=input()
+            self.replace(str)
+            return
         
+        self._current.next.previous=self._current.previous
+        if self._current.previous is None:
+            self._current.previous.next=self._current.next
+        self._current=self._current.next
+
+
 
 if __name__=="__main__":
     pass

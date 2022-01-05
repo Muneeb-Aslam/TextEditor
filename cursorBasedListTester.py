@@ -4,12 +4,11 @@ File: cursorBasedListTester.py
 Menu-driven tester for Cursor-Based List implementation
 """
 
+from os import remove
 from cursor_based_list import CursorBasedList
 
 
-def testList():
-    myList = CursorBasedList()
-    myList.Read_File_Data()
+def testList(myList):
     while True:
         print("\n=============================================================================================================================")
         print("Current List:",myList),"\n\n\n"
@@ -27,8 +26,9 @@ def testList():
         print("N - Next")
         print("P - Previous")
         print("R - remove")
+        print("D - pop")
         print("U - replace")
-        print("X - eXit testing")
+        print("X - Exit Program")
         response = input("Menu Choice? ").upper()
         if response == 'A':
             item = input("Enter the new item to insertAfter: ")
@@ -50,15 +50,18 @@ def testList():
         elif response == 'P':
             myList.previous()
         elif response == 'R':
-            item = myList.remove()
-            print("item removed:",item)
+            myList.remove()
         elif response == 'U':
             item = input("Enter replacement item: ")
             myList.replace(item)
+        elif response == 'D':
+            item = myList.pop()
+            print("removed item is ", item)
         elif response == 'X':
             break
         else:
             print("Invalid Menu Choice!")
 
-testList() 
+if __name__=="__main__":
+    testList()
 
