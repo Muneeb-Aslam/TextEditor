@@ -38,7 +38,7 @@ class CursorBasedList(object):
             Precondition:  the list is not empty."""
         if self.isEmpty():
             raise AttributeError("Empty list has no next item")
-        return self._current.getNext() != self._trailer
+        return self._current.next is not None
 
 
 
@@ -49,7 +49,7 @@ class CursorBasedList(object):
             Precondition:  the list is not empty."""
         if self.isEmpty():
             raise AttributeError("Empty list")
-        return self._current.getPrevious() !=None
+        return self._current.previous is not None
 
 
 
@@ -227,12 +227,12 @@ class CursorBasedList(object):
             str=input()
             self.replace(str)
             return
-        temp=self._current
+    
         self._current.next.previous=self._current.previous
-        if temp.previous is not None:
-            temp.previous=temp.next.previous
+        if self._current.previous is not None:
+            self._current.previous.next=self._current.next
         self._current=self._current.next
-        temp=None
+        
 
 
     def find_word(self,item):
