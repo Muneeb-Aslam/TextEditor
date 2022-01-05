@@ -4,7 +4,7 @@ File: cursorBasedListTester.py
 Menu-driven tester for Cursor-Based List implementation
 """
 
-from os import remove
+from os import remove, replace
 from cursor_based_list import CursorBasedList
 
 
@@ -25,9 +25,10 @@ def testList(myList):
         print("L - Last")
         print("N - Next")
         print("P - Previous")
-        print("R - remove")
-        print("D - pop")
-        print("U - replace")
+        print("R - Remove")
+        print("D - Pop")
+        print("G - Replace_Word")
+        print("H - Find_Word")
         print("X - Exit Program")
         response = input("Menu Choice? ").upper()
         if response == 'A':
@@ -57,6 +58,13 @@ def testList(myList):
         elif response == 'D':
             item = myList.pop()
             print("removed item is ", item)
+        elif response == 'G':
+            str=input("Enter the item ")
+            str1=input("Enter the item to be replace  ")
+            myList.replace_word(str,str1)
+        elif response == 'H':
+            str=input("Enter the item ")
+            myList.find_word(str)
         elif response == 'X':
             break
         else:

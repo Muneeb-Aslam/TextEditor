@@ -227,11 +227,37 @@ class CursorBasedList(object):
             str=input()
             self.replace(str)
             return
-        
+        temp=self._current
         self._current.next.previous=self._current.previous
-        if self._current.previous is None:
-            self._current.previous.next=self._current.next
+        if temp.previous is not None:
+            temp.previous=temp.next.previous
         self._current=self._current.next
+        temp=None
+
+
+    def find_word(self,item):
+        temp=self._current
+        while temp is not None:
+            if item in temp.data:
+                print("Word Found..........")
+                return temp
+            temp=temp.next
+        return 
+
+    def replace_word(self,item,itemtobereplace):
+        temp=self.find_word(item)
+        if temp is None:
+            print("not found")
+        else:
+            list=(temp.data).split()
+            for i in range(0,len(list)):
+                if list[i]==item:
+                    list[i]=itemtobereplace
+            string=' '.join(map(str,list))
+            string+="\n"
+            temp.data=string
+        
+
 
 
 
